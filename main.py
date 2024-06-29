@@ -5,8 +5,8 @@ from food import Food
 from scoreboard import Scoreboard
 
 # BOARD WIDTH AND HEIGHT
-WIDTH = 300
-HEIGHT = 300
+WIDTH = 900
+HEIGHT = 900
 COLOR = "black"
 
 # CONTROLS
@@ -41,9 +41,16 @@ while game_is_on:
 
     if snake.head.distance(food) < 15:
         food.refresh()
+        snake.extend()
         scoreboard.add_score()
 
-    if snake.head.xcor() > 280 or snake.head.xcor() < -280 or snake.head.ycor() < -280 or snake.head.ycor() < 280:
+    if snake.head.xcor() > 450 or snake.head.xcor() < -450 or snake.head.ycor() > 450 or snake.head.ycor() < -450:
+        game_is_on = False
         scoreboard.game_over()
+
+    for segment in snake.segments[1:]:
+        if snake.head.distance(segment) < 10:
+            game_is_on = False
+            scoreboard.game_over()
 
 screen.exitonclick()
